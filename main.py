@@ -45,9 +45,9 @@ def calc(building: Building):
     Start loop on the Calls list and in each call, then start to check on the each elevator (in the building)
     The optimal choice is the calculation of the elevator that performs the call in the shortest time.  
     """
-    for call in listCalls:
+     for call in listCalls:
         best_elev = find_optimal_elev(call)
-    return best_elev
+        yield best_elev
     # for elevator in listElev:
     #      print("index {}".format(check_length - abs(min) + call.get_src()))
     #      print("call = {} ".format(call.to_string()))
