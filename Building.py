@@ -31,12 +31,11 @@ class Building:
     def add_elev(self, elev: Elevator):
         self.elevators.append(elev)
 
-    def to_string(self):
+     def __repr__(self):
         str2 = ""
         for x in self.elevators:
             str2 += "{"
-            str2 += "{},\n".format(x.toString())
+            str2 += "{},\n".format(x)
             str2 += "}"
-        string = "min_floor = {}, max_floor = {}, numElevators = {},\n elevators = \n{}".format(
+        return "min_floor = {}, max_floor = {}, numElevators = {},\n elevators = \n{}".format(
             self.min_floor, self.max_floor, len(self.elevators), str2)
-        return string
