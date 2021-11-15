@@ -3,210 +3,165 @@ import csv
 import sys
 import os.path
 from Calls import Calls
-from Buildings import Building
+from Building import Building
 from Elevator import Elevator
 import numpy as np
 
-# 0 -> 4
-# 3 -> 0
-
-# 0 -> 4
-
-#the list of the calls
 listCalls = []
-#the list of the elevators
 listElev = []
-#the length of the building
 length = 0
 
 
-#calclute the total time
-def calc(b: Building):
-        length = abs(b.getmaxFloor() - b.getminFloor()) + 1
-        print("lengthB = {}".format(length))
-        min = b.getminFloor()
-        print("min = {}".format(min))
-        for floor in range(length):
-            # result = length  + x + 1
-            row = length + floor + 1
-            col = length + (floor + 1) + 1
-            srcFloor = row - length - 1
-            destFloor = col - length - 1
-            # print(" index of row is : lengthB + floor = {} + {} = {}".format(length, floor, (row)))
-            # print(" index of col is : lengthB + floor = {} + {} = {}".format(length, floor + 1, (col)))
-            # print(" row - length - 1 = {} - 1 - {} = {}".format(row, length, (srcFloor)))
-            # print(" col - length - 1 = {} - 1 - {} = {}\n".format(col, length, (destFloor)))
-        # c1 = listCalls[0]
-        # c2 = listCalls[1]
-        # c3 = listCalls[2]
-        # for call in listCalls:
-        # print(c1.get_src())
-        # print(c1.get_dst())
-        # c1L = c1.calc()
-        # c2L = c2.calc()
-        # c3L = c3.calc()
-        # print("c1 = {}".format(c1.toString()))
-        # print("c2 = {}".format(c2.toString()))
-        # print("c3 = {}".format(c3.toString()))
-        e1 = b.getEl()[0]
-        # oldtime = 0
-        # print("e1 = {} ".format(e1.toString()))
+def calc(building):
+    check_length = abs(0 - building.get_min_floor()) + 1
+    print("lengthB = {}".format(check_length))
+    min = building.get_min_floor()
+    print("min = {}".format(min))
 
-        #run on the calls and the numbers of elevators in the buliding
-        for c in listCalls:
-            for e in b.elevators:
-                print("index {}".format(length - abs(min) + c.get_src()))
-                print("c = {} ".format(c.toString()))
+    # -------------------------------------------------------------------------------------------
+    """
+    The calculation for the conversion of the source floor and the destination of the call to the correct
+    position of the index in the matrix.
+    The formula to get the index of the src and the dest in the mat:
+          row (src) = abs(0 - min floor of the building) + src_of_the_call + 1
+          col (dest) = abs(0 - min floor of the building) + dest_of_the_call + 1
+    The formula to get the src and the dest floor from the index in the matrix:
+          src_floor = row - length - 1
+          dest_floor = col - length - 1
+    """
+    # an example to run on 11 floors
+    for floor in range(11):
+        row = check_length + floor + 1
+        col = check_length + floor + 1
+        src_floor = row - length - 1
+        dest_floor = col - length - 1
+        print(" index of row is : lengthB + floor = {} + {} = {}".format(length, floor, row))
+        print(" index of col is : lengthB + floor = {} + {} = {}".format(length, floor + 1, col))
+        print(" row - length - 1 = {} - 1 - {} = {}".format(row, length, src_floor))
+        print(" col - length - 1 = {} - 1 - {} = {}\n".format(col, length, dest_floor))
+    # -------------------------------------------------------------------------------------------
 
-                time = e.calc(e.get_curr_floor(), c.get_src())
+    e1 = building.get_elev()[0]
+    e2 = building.get_elev()[1]
+    oldtime = 0
+    print("e1 = {} ".format(e1.toString()))
 
-                # what is the direction of the elevator
-                if e.get_curr_floor() > c.get_src():
-                    e.set_dirc_el(-1)
-                elif e.get_curr_floor() < c.get_src():
-                    e.set_dirc_el(1)
+    """
+    Start checking the optimal elevator to do the call - a comparison made by the elevator speed in this call
+    Start loop on the Calls list and in each call, then start to check on the each elevator (in the building)
+    The optimal choice is the calculation of the elevator that performs the call in the shortest time.  
+    """
+    for call in listCalls:
+        for elevator in listElev:
+            print("index {}".format(check_length - abs(min) + call.get_src()))
+            print("call = {} ".format(call.to_string()))
 
-                time += e.calc(c.get_src(), c.get_dst())
+            time = elevator.calc(elevator.get_curr_floor(), call.get_src())
 
-                if e.get_curr_floor() > c.get_src():
-                    e.set_dirc_el(-1)
-                elif e.get_curr_floor() < c.get_src():
-                    e.set_dirc_el(1)
+            # what is the direction of the elevator
+            if elevator.get_curr_floor() > call.get_src():
+                elevator.set_direction_el(-1)
+            elif elevator.get_curr_floor() < call.get_src():
+                elevator.set_direction_el(1)
 
-                # init the current floor by the destination of the last call
-                e1.set_curr_floor(c.get_dst())
+            time += elevator.calc(call.get_src(), call.get_dest())
 
-                # oldtime += time
-                print(" time = {}".format(time))
-                print("e = {} ".format(e.toString()))
+            # what is the direction of the elevator after the elevator go to the dest floor???
+            if elevator.get_curr_floor() > call.get_src():
+                elevator.set_direction_el(-1)
+            elif elevator.get_curr_floor() < call.get_src():
+                elevator.set_direction_el(1)
 
-                #check the best elev to the call
-                theBestElev(e,c)
-                return e.getID
+            # init the current floor by the destination of the last call
+            elevator.set_curr_floor(call.get_dest)
 
+            # old_time += time
+            print(" time = {}".format(time))
+            print("e1 = {} ".format(e2.toString()))
 
-#check if one elevator (one martix) time to the dest is less then the other if, if yes allocate this elevator
-def theBestElev(e:Elevator, c:Calls):
-        length = abs(b.getmaxFloor() - b.getminFloor()) + 1
-        for floor in range(length):
-            row = length + floor + 1
-            col = length + (floor + 1) + 1
-            srcFloor = row - length - 1
-            destFloor = col - length - 1
-            print("dest = {} ".format(destFloor))
-            check_e = matrix_el(e, c)
-            # check_e1 = matrix_el((e1 + i),c)
-            temp = 0
-            # temp = check_e1[srcFloor][destFloor]
-            if (check_e[srcFloor][destFloor] < temp):
-                temp = check_e[srcFloor][destFloor]
-                print("ID = {}", e.getID)
-                return e.getID
+            # -------------------------------------------------------------
+            # check_e = Elevator.matrix_el(e, c)
+            # check_e1 = Elevator.matrix_el((e + 1), c)
+            #
+            # for i in Elevator.matrix_el(e, c).size():
+            #     Elevator.matrix_el(e, c)
+            #     Elevator.matrix_el((e + i), c)
+            #
+            #     temp = check_e1[c.get_src][c.get_dst]
+            #     if check_e[c.row][c.col] < temp:
+            #         temp = check_e[c.row][c.col]
+            #         return e.getID
 
-#put in the matrix the elevators : the row and the col will be the num of the floors in the buliding.
-#in the matrix the upper half will be the time between src floor and dest floor
-#when the src=dest (diagnal matrix) the time will be 0
-def matrix_el(e: Elevator, c : Calls) -> None:
-        length = abs(b.maxFloor - b.minFloor) + 1
-        for floor in range(length):
-            # result = length  + x + 1
-            row = length + floor + 1
-            col = length + (floor + 1) + 1
-            elev_matrix = np.matrix(length + 1)
-            for i in range(len(elev_matrix)):
-                for j in range(len(elev_matrix[0])):
-                    if (i == j):
-                        elev_matrix[i][j] = 0
-                    elif (i < j):
-                        elev_matrix[row][col] = elev_matrix.Elevator.calc(c.get_src(), c.get_dst())
-                        print(elev_matrix)
-
-
-        # print("c2 = {}".format(c2L))
-        # print(c2.get_src())
-        # print(c2.get_dst())
-
-        # print(c1.toString())
-        # print(c2.toString())
-
-
-    # length =(b.maxFloor - b.minFloor +1)
-    # mat = np.matrix(length)
-    # print(mat)
-    # print("length = {}".format(length))
-    # elev1 = b.elevators[1]
-    # elev0 = b.elevators[0]
-
-    # print("elev 0 = {}".format(elev0.calc(-1,10)))
-    # print("elev 1 = {}".format(elev1.calc(-1,10)))
-
-    # def comper_time()
+        elev = b.elevators
 
 
 # def fastest_elevator(elev: Elevator) -> int:
-#         ans = 0
-#         temp = building_data["_elevators"].get(0).speed
-#         for i in len(building_data["_elevators"]):
-#             if building_data["_elevators"].get(i).speed > temp:
-#                 temp = building_data["_elevators"].get(i).speed
-#             ans = i
-#         return ans
-
+#     ans = 0
+#     temp = building_data["_elevators"].get(0).speed
+#     for i in len(building_data["_elevators"]):
+#         if building_data["_elevators"].get(i).speed > temp:
+#             temp = building_data["_elevators"].get(i).speed
+#         ans = i
+#     return ans
+# -----------------------------------------------------------------------------
 
 # read from the csv
+
 def read_csv(file: str) -> list:
-        list_csv = []
-        with open(file, newline='') as csv_list:
-            csv_reader = csv.reader(csv_list)
-            for row in csv_reader:
-                c = Calls(row[1], row[2], row[3])
-                listCalls.append(c)
-            # for val in listCalls:
-            #     print(val.toString())
-        return list_csv
+    list_csv = []
+    with open(file, newline='') as csv_list:
+        csv_reader = csv.reader(csv_list)
+        for row in csv_reader:
+            c = Calls(row[1], row[2], row[3])
+            listCalls.append(c)
+        # for val in listCalls:
+        #     print(val.toString())
+    return list_csv
 
 
 # list back to file
+
 def write_csv(file: str, new_list: list) -> None:
-        with open(file, 'w+', newline='') as csv_file:
-            csv_writer = csv.writer(csv_file)
-            csv_writer.writerows(new_list)
+    with open(file, 'w+', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerows(new_list)
 
 
 # read Json to Dict
+
 def read_json(file: str) -> Building:
-        with open(file) as json_file:
-            json_data = json.load(json_file)
-            _minFloor = int(json_data['_minFloor'])
-            _maxFloor = int(json_data['_maxFloor'])
-            length = _maxFloor - _minFloor + 1
-            b = Building(_minFloor, _maxFloor)
-            for e in json_data['_elevators']:
-                _id = e["_id"]
-                _minFloor = e["_minFloor"]
-                _maxFloor = e["_maxFloor"]
-                _speed = e["_speed"]
-                _closeTime = e["_closeTime"]
-                _openTime = e["_openTime"]
-                _startTime = e["_startTime"]
-                _stopTime = e["_stopTime"]
-                elev = Elevator(_id, _minFloor, _maxFloor, _speed, _closeTime, _openTime, _startTime, _stopTime)
-                b.addEl(elev)
-            return b
+    with open(file) as json_file:
+        json_data = json.load(json_file)
+        _minFloor = int(json_data['_minFloor'])
+        _maxFloor = int(json_data['_maxFloor'])
+        check_length = _maxFloor - _minFloor + 1
+        building = Building(_minFloor, _maxFloor)
+        for elev in json_data['_elevators']:
+            _id = elev["_id"]
+            _minFloor = elev["_minFloor"]
+            _maxFloor = elev["_maxFloor"]
+            _speed = elev["_speed"]
+            _closeTime = elev["_closeTime"]
+            _openTime = elev["_openTime"]
+            _startTime = elev["_startTime"]
+            _stopTime = elev["_stopTime"]
+            elevator = Elevator(_id, _minFloor, _maxFloor, _speed, _closeTime, _openTime, _startTime, _stopTime)
+            # print(elevator.to_string())
+            building.add_elev(elevator)
+        return building
 
-        return json_data
+    return json_data
 
-#Receive the building files and calls
+
 BUILDING = os.path.join(sys.argv[1])
 CALLS = os.path.join(sys.argv[2])
 OUTPUT = 'Allocation.csv'
 
 if __name__ == '__main__':
-        b = building_data = read_json(BUILDING)
-        calls = read_csv(CALLS)
-        print(b.toString())
-        calc(b)
+    b = building_data = read_json(BUILDING)
+    calls = read_csv(CALLS)
+    print(b.to_string())
+    calc(b)
 
 # finish
 # write_csv(OUTPUT, calls)
-
