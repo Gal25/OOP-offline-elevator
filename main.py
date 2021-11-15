@@ -28,69 +28,9 @@ def calc(call: Calls):
           src_floor = row - length - 1
           dest_floor = col - length - 1
     """
-    # an example to run on 11 floors
-
-    # row = check_base_floor + floor + 1
-    # col = check_base_floor + floor + 1
-    # src_floor = row - length - 1
-    # dest_floor = col - length - 1
-    # print(" index of row is : lengthB + floor = {} + {} = {}".format(length, floor, row))
-    # print(" index of col is : lengthB + floor = {} + {} = {}".format(length, floor + 1, col))
-    # print(" row - length - 1 = {} - 1 - {} = {}".format(row, length, src_floor))
-    # print(" col - length - 1 = {} - 1 - {} = {}\n".format(col, length, dest_floor))
-    # -------------------------------------------------------------------------------------------
-
-    oldtime = 0
-
-    """
-    Start checking the optimal elevator to do the call - a comparison made by the elevator speed in this call
-    Start loop on the Calls list and in each call, then start to check on the each elevator (in the building)
-    The optimal choice is the calculation of the elevator that performs the call in the shortest time.
-    """
+ 
 
     return find_optimal_elev(call)
-
-    # for elevator in listElev:
-    #      print("index {}".format(check_length - abs(min) + call.get_src()))
-    #      print("call = {} ".format(call.to_string()))
-    #
-    #      time = elevator.calc(elevator.get_curr_floor(), call.get_src())
-    #
-    #      # what is the direction of the elevator
-    #      if elevator.get_curr_floor() > call.get_src():
-    #          elevator.set_direction_el(-1)
-    #      elif elevator.get_curr_floor() < call.get_src():
-    #          elevator.set_direction_el(1)
-    #
-    #      time += elevator.calc(call.get_src(), call.get_dest())
-    #
-    #      # what is the direction of the elevator after the elevator go to the dest floor???
-    #      if elevator.get_curr_floor() > call.get_src():
-    #          elevator.set_direction_el(-1)
-    #      elif elevator.get_curr_floor() < call.get_src():
-    #          elevator.set_direction_el(1)
-    #
-    #      # init the current floor by the destination of the last call
-    #      elevator.set_curr_floor(call.get_dest)
-    #
-    #      # old_time += time
-    #      print(" time = {}".format(time))
-    #      print("e1 = {} ".format(e2.toString()))
-
-    # -------------------------------------------------------------
-    # check_e = Elevator.matrix_el(e, c)
-    # check_e1 = Elevator.matrix_el((e + 1), c)
-    #
-    # for i in Elevator.matrix_el(e, c).size():
-    #     Elevator.matrix_el(e, c)
-    #     Elevator.matrix_el((e + i), c)
-    #
-    #     temp = check_e1[c.get_src][c.get_dst]
-    #     if check_e[c.row][c.col] < temp:
-    #         temp = check_e[c.row][c.col]
-    #         return e.getID
-
-    # elev = b.elevators
 
 
 def find_optimal_elev(call: Calls):
@@ -116,14 +56,6 @@ def find_direction(elev, src, dest):
         elev.set_direction_el(1)
 
 
-# def fastest_elevator(elev: Elevator) -> int:
-#     ans = 0
-#     temp = building_data["_elevators"].get(0).speed
-#     for i in len(building_data["_elevators"]):
-#         if building_data["_elevators"].get(i).speed > temp:
-#             temp = building_data["_elevators"].get(i).speed
-#         ans = i
-#     return ans
 # -----------------------------------------------------------------------------
 
 # read from the csv
