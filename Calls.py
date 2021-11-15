@@ -58,4 +58,4 @@ class Calls:
     def to_string(self) -> str:
         string = "time = {}, get_src = {}, get_dest = {}, Elev = {}".format(
             self.time, self.src, self.dest, self.Elev)
-        return str
+        return string
