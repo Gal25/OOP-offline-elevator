@@ -55,7 +55,7 @@ class Calls:
     def set_direction_el(self, direction_el):
         self.direction_el = direction_el
 
-    def to_string(self) -> str:
-        string = "time = {}, get_src = {}, get_dest = {}, Elev = {}".format(
+     def __repr__(self):
+        return "time = {}, get_src = {}, get_dest = {}, Elev = {}".format(
             self.time, self.src, self.dest, self.Elev)
-        return string
+
