@@ -12,8 +12,7 @@ listElev = []
 length = 0
 
 
-def calc(building: Building):
-    check_base_floor = abs(0 - building.get_min_floor()) + 1
+def calc(call: Calls):
     if len(listElev) == 0:
         print("There is no elevators in this building!")
     elif len(listElev) == 1:
@@ -46,11 +45,11 @@ def calc(building: Building):
     """
     Start checking the optimal elevator to do the call - a comparison made by the elevator speed in this call
     Start loop on the Calls list and in each call, then start to check on the each elevator (in the building)
-    The optimal choice is the calculation of the elevator that performs the call in the shortest time.  
+    The optimal choice is the calculation of the elevator that performs the call in the shortest time.
     """
-     for call in listCalls:
-        best_elev = find_optimal_elev(call)
-        yield best_elev
+
+    return find_optimal_elev(call)
+
     # for elevator in listElev:
     #      print("index {}".format(check_length - abs(min) + call.get_src()))
     #      print("call = {} ".format(call.to_string()))
@@ -99,9 +98,9 @@ def find_optimal_elev(call: Calls):
     min_time = float('inf')
     for elev in listElev:
         find_direction(elev, elev.get_curr_floor(), call.get_src())
-        arrival_src_time = elev.calc(elev.get_curr_floor(), call.get_src())
+        arrival_src_time = elev.calc_elevator(elev.get_curr_floor(), call.get_src())
         find_direction(elev, call.get_src(), call.get_dest())
-        arrival_dest_time = elev.calc(call.get_src(), call.get_dest())
+        arrival_dest_time = elev.calc_elevator(call.get_src(), call.get_dest())
         total_time = arrival_src_time + arrival_dest_time
         if total_time < min_time:
             min_time = total_time
@@ -135,7 +134,8 @@ def read_csv(file: str) -> list:
         csv_reader = csv.reader(csv_list)
         for row in csv_reader:
             c = Calls(row[1], row[2], row[3])
-            listCalls.append(c)
+            print(c)
+            list_csv.append(c)
         # for val in listCalls:
         #     print(val.toString())
     return list_csv
@@ -143,10 +143,11 @@ def read_csv(file: str) -> list:
 
 # list back to file
 
-def write_csv(file: str, new_list: list) -> None:
-    with open(file, 'w+', newline='') as csv_file:
-        csv_writer = csv.writer(csv_file)
-        csv_writer.writerows(new_list)
+def write_csv(file: str, new_list: list) -> None: # new_list = calls (speed,
+    print(new_list)
+    with open(file, 'w') as csv_file:
+        for i in new_list:
+            csv_file.write(i+'\n')
 
 
 # read Json to Dict
@@ -168,24 +169,47 @@ def read_json(file: str) -> Building:
             _startTime = elev["_startTime"]
             _stopTime = elev["_stopTime"]
             elevator = Elevator(_id, _minFloor, _maxFloor, _speed, _closeTime, _openTime, _startTime, _stopTime)
-            # print(elevator.to_string())
+            # elevator = Elevator(**elev)
             building.add_elev(elevator)
         return building
 
-    return json_data
 
-
-BUILDING = os.path.join(sys.argv[1])
-CALLS = os.path.join(sys.argv[2])
+BUILDING = sys.argv[1]
+CALLS = sys.argv[2]
 OUTPUT = 'Allocation.csv'
 
-if __name__ == '__main__':
-    b = building_data = read_json(BUILDING)
+def call_to_string(call):
+    call_dict = call.call_to_dict()
+    return f"Elevator call,{call_dict.get('time')},{call_dict.get('src')},{call_dict.get('dest')},0,{call_dict.get('elev').get_id()}"
+
+def main():
+    global listElev
+
+    b = read_json(BUILDING)
+    listElev = b.get_elev()
+
     calls = read_csv(CALLS)
-    # print(b)
-    # calc(b)
-    # find_optimal_elev(calls)
-    for index in range(len(calls)):
-        call = calls[index]
-        # call[5] = calc
-    write_csv(OUTPUT, calls)
+    print(os.getcwd())
+    if len(listElev) == 0:
+        print("There is no elevators in this building!")
+    elif len(listElev) == 1:
+        expected_calls = []
+        for call in calls:
+            call.set_elev(listElev[0])
+            expected_calls.append(call_to_string(call))
+        write_csv(OUTPUT, expected_calls)  # Calc_B.csv
+        return
+
+    expected_calls = []
+    for call in calls:
+        call.set_elev(calc(call))
+
+        expected_calls.append(call_to_string(call))
+
+    #     call[5] = calc(call).get_id()
+    #     print(call)
+    write_csv(OUTPUT, expected_calls)
+
+
+if __name__ == '__main__':
+    main()
