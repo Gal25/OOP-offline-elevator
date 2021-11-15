@@ -14,7 +14,10 @@ length = 0
 
 def calc(building: Building):
     check_base_floor = abs(0 - building.get_min_floor()) + 1
-
+    if len(listElev) == 0:
+        print("There is no elevators in this building!")
+    elif len(listElev) == 1:
+        return listElev[0]
     # -------------------------------------------------------------------------------------------
     """
     The calculation for the conversion of the source floor and the destination of the call to the correct
