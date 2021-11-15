@@ -55,7 +55,14 @@ class Calls:
     def set_direction_el(self, direction_el):
         self.direction_el = direction_el
 
-     def __repr__(self):
+    def __repr__(self):
         return "time = {}, get_src = {}, get_dest = {}, Elev = {}".format(
             self.time, self.src, self.dest, self.Elev)
 
+    def call_to_dict(self):
+        return {
+            'time': self.time,
+            'src': self.src,
+            'dest': self.dest,
+            'elev': self.Elev
+        }
