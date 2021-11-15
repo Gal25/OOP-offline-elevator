@@ -106,19 +106,19 @@ class Elevator:
         # print("val = {}".format(val))
         return val
 
-    def __repr__(self):
-        return "_id = {}, min_floor = {}, max_floor = {}, speed = {}, close_time = {}, open_time = {}, start_time = {" \
-                 "}, stop_time = {}, curr_floor = {}, direction_el = {}, available_elev = {}".format(self.id,
-                                                                                                     self.min_floor,
-                                                                                                     self.max_floor,
-                                                                                                     self.speed,
-                                                                                                     self.close_time,
-                                                                                                     self.open_time,
-                                                                                                     self.start_time,
-                                                                                                     self.stop_time,
-                                                                                                     self.curr_floor,
-                                                                                                     self.direction_el,
-                                                                                                     self.available_elev)
+    # def __repr__(self):
+    #     return "_id = {}, min_floor = {}, max_floor = {}, speed = {}, close_time = {}, open_time = {}, start_time = {" \
+    #              "}, stop_time = {}, curr_floor = {}, direction_el = {}, available_elev = {}".format(self.id,
+    #                                                                                                  self.min_floor,
+    #                                                                                                  self.max_floor,
+    #                                                                                                  self.speed,
+    #                                                                                                  self.close_time,
+    #                                                                                                  self.open_time,
+    #                                                                                                  self.start_time,
+    #                                                                                                  self.stop_time,
+    #                                                                                                  self.curr_floor,
+    #                                                                                                  self.direction_el,
+    #                                                                                                  self.available_elev)
 
 
 def matrix_el(check_building) -> None:
