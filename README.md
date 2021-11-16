@@ -1,33 +1,27 @@
 # OOP-Ex1
 This project is an assignment in an object-oriented course at Ariel University.
-The purpose of the task is to find an optimal solution to the offline-elevator problem.
-The challenge of the elevator problem is - given a call to the elevator from the source floor to the destination floor - the system will want to embed the elevator that will reduce the arrival time to a minimum. That is, more generally it is said that given a collection of lifts calls in time we would like to define an elevator placement strategy for calls that will minimize the total arrival time for all calls.
-In this solution to the elevator problem we got a json file defined as a building as well as a csv file which we were a file containing the total calls.
+The purpose of the task is to find an optimal elevator to solve the offline-elevator problem.
+The challenge is:
+by given a call to the elevator from the source floor to the destination floor - the algorithm will want to embed the index of the elevator that will reduce the arrival time to a minimum. In general, upon receipt of a file of Calls and Buildings, we would like to run the algorithm on a the Building file, and in each case we will assign the ultimate elevator to each call that will ultimately give the average waiting time as low as possible.
+In this solution to the elevator problem, we got a json file defined as a building as well as a csv file defined as a total calls.
 The purpose of the algorithm is to assign the fastest elevator to the task. The way of realization is:
 
-If there is one elevator –
+By definition the calls appear to be arranged chronologically, from the fastest call to the slowest call of the simulator. Indeed the algorithm revolves around the use of running time data and the speed of each elevator.
 
-One list was built for all the readings of the elevator.
-Each cell of the list will be defined according to the source and destination of the reading, the order of the nodes in the list will be defined according to the order of the read times received in advance (offline- elevator).
+In case that there is one elevator:
 
-First the elevator will approach the first compartment first since this is the first reading, we will examine whether its direction is ascending or descending. We will then go through the entire list i.e. all the readings and examine whether there are readings whose origin is included within the reading range of the current node, i.e. we will sort the list according to the reading source.
-If there is a call that is covered within the elevator range, the overlapping calls will also be added to the route. If not, the elevator will leave the same readings on a temporary basis
-Reading them.
+we will built one list for all the readings of the elevator.
+Each cell of the list will be defined according to the source and destination of the call, the order of the nodes in the list will be defined according to the order of the calls times received in advance (OFFLINE elevator).
 
-If there is more than one elevator-
+In case there is more than one elevator:
 
-For ascending readings, a ListUp list is constructed.
-For calls from elevators that are descending, a ListDown list is constructed.
+Adjust the call to the elevator according to the fastest elevator.
+Since this is an OFFLINE case of the placement of the calls to the elevators, the beginning of the algorithm the elevators are in LEVEL mode LEVEL on the zero floor of the building. The algorithm will call the fastest elevator, on first call, becuease without any prior thinking the all elevators start from the same floor.
+Because we are given file of Call - there are call times, so we will work in the same chronological order of the arrival of the calls each time.
+The algorithm assigns to each call the optimal elevator for it by connecting the variables:
+* Calculate the time it takes for the elevator to get from its current floor in the building to the sorce floor of the given call.
+* Calculate the time it takes for the elevator to get from the source floor of the call to the destination floor of that call.
 
-Each cell of a list will be defined by source and destination, the order of the cells in the list will be defined by the order of read times.
-
-ListUp:
-The first elevator will be assigned to the first junction i.e. to the first reading. :
-We will go through the entire list and examine whether there are readings whose origin is included within the reading range of the current node: if so, the elevator will attach to the track the reading of the current node.
-If not, we will assign another elevator to read the current node.
-
-ListDown:
-The first elevator will be assigned to the first junction i.e. to the first reading.
-We will go through the entire list and examine whether there are readings whose origin is included within the reading range of the current node: if so, the elevator will attach to the track the reading of the current node.
-If not, we will assign another elevator to read the current node.
-
+Selectong the best choice - by comparing times of the elevators and choosing the fast elevator for the same call.
+In calculating the elevator times we include the opening and closing times of the doors, acceleration and deceleration times in each elevator, and the division of the elevator speed according to the number of floors in the call are taken into account.
+In addition, there is reference to the direction of the elevator and adjustment of the call direction to the direction of the elevator.
