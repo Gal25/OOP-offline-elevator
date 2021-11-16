@@ -10,11 +10,17 @@ listElev = []
 length = 0
 
 
-def calc(call: Calls):
-    return find_optimal_elev(call)
-
-
 def find_optimal_elev(call: Calls):
+    """
+    this function check the which is the optimal elevator to the call.
+    first we check the direction of the elevator with the helper function 'find_direction',
+    and then we calculate the time it will take for the elevator to get from the current floor to the src floor,
+    then calculate the time that the elevator go to the dest floor from the src floor.
+    after that we compare to each elevator in the building.
+
+    :param call:
+    :return: the optimal elevator 
+    """
     close_elev = None
     min_time = float('inf')
     for elev in listElev:
@@ -85,7 +91,7 @@ def read_json(file: str) -> Building:
 
 BUILDING = sys.argv[1]
 CALLS = sys.argv[2]
-OUTPUT = 'Allocation.csv' #sys.argv[3]
+OUTPUT = 'Allocation.csv'
 
 
 def call_to_string(call, elev: int):
@@ -104,13 +110,13 @@ def main():
         print("There is no elevators in this building!")
     elif len(listElev) == 1:
         for call in calls:
-            elevator = calc(call)
+            elevator = find_optimal_elev(call)
             expected_calls.append(call_to_string(call, elevator.get_id()))
         write_csv(OUTPUT, expected_calls)
         return
 
     for call in calls:
-        elevator = calc(call)
+        elevator = find_optimal_elev(call)
         expected_calls.append(call_to_string(call, elevator.get_id()))
         for i in listElev:
             if i.get_id() == elevator.get_id():
