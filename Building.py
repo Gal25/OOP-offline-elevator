@@ -25,13 +25,13 @@ class Building:
     def get_elev(self):
         return self.elevators
 
-    def set_elev(self, elev: dict):
+    def set_elev(self, elev: list):
         self.elevators = elev
 
     def add_elev(self, elev: Elevator):
         self.elevators.append(elev)
 
-     def __repr__(self):
+    def __repr__(self):
         str2 = ""
         for x in self.elevators:
             str2 += "{"
