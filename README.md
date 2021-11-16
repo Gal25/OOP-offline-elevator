@@ -16,7 +16,7 @@ Each cell of the list will be defined according to the source and destination of
 In case there is more than one elevator:
 
 Adjust the call to the elevator according to the fastest elevator.
-Since this is an OFFLINE case of the placement of the calls to the elevators, the beginning of the algorithm the elevators are in LEVEL mode LEVEL on the zero floor of the building. The algorithm will call the fastest elevator, on first call, becuease without any prior thinking the all elevators start from the same floor.
+Since this is an OFFLINE case of the placement of the calls to the elevators, the beginning of the algorithm- the elevators are in LEVEL mode,in the zero floor of the building. The algorithm will call the fastest elevator, on first call, becuase without any prior thinking the all elevators start from the same floor.
 Because we are given file of Call - there are call times, so we will work in the same chronological order of the arrival of the calls each time.
 The algorithm assigns to each call the optimal elevator for it by connecting the variables:
 * Calculate the time it takes for the elevator to get from its current floor in the building to the sorce floor of the given call.
