@@ -10,8 +10,8 @@ By definition the calls appear to be arranged chronologically, from the fastest 
 
 In case that there is one elevator:
 
-we will built one list for all the readings of the elevator.
-Each cell of the list will be defined according to the source and destination of the call, the order of the nodes in the list will be defined according to the order of the calls times received in advance (OFFLINE elevator).
+We will built one list for all the readings of the elevator.
+Each cell of the list will be defined according to the source and destination of the call, the order of the nodes in the list will be defined according to the order of the calls times received in advance (offline-elevator).
 
 In case there is more than one elevator:
 
