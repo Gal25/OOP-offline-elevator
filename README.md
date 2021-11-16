@@ -8,6 +8,9 @@ The purpose of the algorithm is to assign the fastest elevator to the task. The 
 
 By definition the calls appear to be arranged chronologically, from the fastest call to the slowest call of the simulator. Indeed the algorithm revolves around the use of running time data and the speed of each elevator.
 
+We will first note how the elevator works as given to us-
+The elevator goes up and performs all the calls that are in its vicinity, then the elevator goes down to the bottom and again again performs the calls that are in its vicinity.
+
 In case that there is one elevator:
 
 We will built one list for all the readings of the elevator.
@@ -24,4 +27,6 @@ The algorithm assigns to each call the optimal elevator for it by connecting the
 
 Selectong the best choice - by comparing times of the elevators and choosing the fast elevator for the same call.
 In calculating the elevator times we include the opening and closing times of the doors, acceleration and deceleration times in each elevator, and the division of the elevator speed according to the number of floors in the call are taken into account.
-In addition, there is reference to the direction of the elevator and adjustment of the call direction to the direction of the elevator.
+In addition, there is a reference to the direction of the elevator and adjusting the direction of the call to the direction of the elevator - in every time it takes the elevator to reach the destination (or the reading source or the reading destination) we will first want to check the direction of the elevator.
+
+
