@@ -29,4 +29,8 @@ Selectong the best choice - by comparing times of the elevators and choosing the
 In calculating the elevator times we include the opening and closing times of the doors, acceleration and deceleration times in each elevator, and the division of the elevator speed according to the number of floors in the call are taken into account.
 In addition, there is a reference to the direction of the elevator and adjusting the direction of the call to the direction of the elevator - in every time it takes the elevator to reach the destination (or the reading source or the reading destination) we will first want to check the direction of the elevator.
 
+# External info:
+* https://www.geeksforgeeks.org/fcfs-disk-scheduling-algorithms/
+* http://www.intertent.co.il/2011/07/elevator-algorithm.html
+* https://github.com/mshang/python-elevator-challenge
 
