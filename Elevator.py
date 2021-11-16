@@ -1,7 +1,3 @@
-import numpy as np
-# from Building import Building
-
-
 class Elevator:
 
     def __init__(self, _id, min_floor, max_floor, speed, close_time, open_time, start_time, stop_time) -> None:
@@ -101,47 +97,10 @@ class Elevator:
         elif (src <= 0 and dest > 0) or (src > 0 and dest <= 0):
             i = 1
         val = abs(dest - src) + i
-        val *= self.speed
+        val /= self.speed
         val += self.open_time + self.close_time + self.stop_time + self.start_time
-        # print("val = {}".format(val))
         return val
 
-    # def __repr__(self):
-    #     return "_id = {}, min_floor = {}, max_floor = {}, speed = {}, close_time = {}, open_time = {}, start_time = {" \
-    #              "}, stop_time = {}, curr_floor = {}, direction_el = {}, available_elev = {}".format(self.id,
-    #                                                                                                  self.min_floor,
-    #                                                                                                  self.max_floor,
-    #                                                                                                  self.speed,
-    #                                                                                                  self.close_time,
-    #                                                                                                  self.open_time,
-    #                                                                                                  self.start_time,
-    #                                                                                                  self.stop_time,
-    #                                                                                                  self.curr_floor,
-    #                                                                                                  self.direction_el,
-    #                                                                                                  self.available_elev)
+  
 
 
-def matrix_el(check_building) -> None:
-    """
-    This function defines the Adjacency Matrix which we will work with.The matrix:
-    A square matrix, will be the size of the building. Calculation - the difference between the minimum floor and the
-    maximum plus 1 (= zero floor).
-    The rows will form the src floors The columns will form the dest floors according to each call.
-    :param check_building: the building to have the size of the matrix
-    #:param elev_matrix: any elevator from the Elevators list
-    :return: A matrix that constitutes all the running times of the elevator for all possible calls
-            (get a top triangular matrix)
-    """
-    building_max_floor = check_building.get_max_floor()
-    building_min_floor = check_building.get_min_floor()
-    length = abs(building_max_floor - building_min_floor) + 1
-    elev_matrix = np.matrix(length)
-    for i in range(len(elev_matrix)):
-        for j in range(len(elev_matrix[0])):
-            if i == j:
-                elev_matrix[i][j] = 0
-                # will be zero because the src floor and the dest floor are the same and there no movement
-            elif i < j:
-                elev_matrix[i][j] = elev_matrix.calc_elevator(i, j)
-            else:
-                pass
