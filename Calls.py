@@ -18,19 +18,6 @@ class Calls:
     def set_time(self, time):
         self.time = time
 
-    def calc_floor_call(self):
-        """
-        The function checks the number of floors in the existing call
-        :return: numbers of floors, (between the src and the dest)
-        """
-        i = 0
-        if self.src == self.dest:
-            return 0
-        elif (self.src <= 0 and self.dest > 0) or (self.src > 0 and self.dest <= 0):
-            i = 1
-        val = abs(self.dest - self.src) + i
-        return val
-
     def get_src(self):
         return self.src
 
