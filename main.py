@@ -19,21 +19,39 @@ def find_optimal_elev(call: Calls):
     after that we compare to each elevator in the building.
 
     :param call:
-    :return: the optimal elevator 
+    :return: the optimal elevator
     """
     close_elev = None
     min_time = float('inf')
+    total_time = 0
     for elev in listElev:
-        find_direction(elev, elev.get_curr_floor(), call.get_src())
-        arrival_src_time = elev.calc_elevator(elev.get_curr_floor(), call.get_src())
+            if find_direction(elev, call.get_src(), call.get_dest()) == 1:
 
-        find_direction(elev, call.get_src(), call.get_dest())
-        arrival_dest_time = elev.calc_elevator(call.get_src(), call.get_dest())
+                if find_direction(elev, elev.get_curr_floor(), call.get_src()) == 1:
+                    arrival_src_time = elev.calc_elevator(elev.get_curr_floor(), call.get_src())
+                    arrival_dest_time = elev.calc_elevator(call.get_src(), call.get_dest())
+                    total_time = arrival_src_time + arrival_dest_time
 
-        total_time = arrival_src_time + arrival_dest_time
-        if total_time < min_time:
-            min_time = total_time
-            close_elev = elev
+                elif find_direction(elev, elev.get_curr_floor(), call.get_src()) == -1:
+                    arrival_src_time = elev.calc_elevator(elev.get_curr_floor(), call.get_src())
+                    arrival_dest_time = elev.calc_elevator(call.get_src(), call.get_dest())
+                    total_time = arrival_src_time + arrival_dest_time + ((abs(elev.get_min_floor() - elev.get_min_floor()))/elev.get_speed())
+
+            elif find_direction(elev, call.get_src(), call.get_dest()) == -1:
+
+                if find_direction(elev, elev.get_curr_floor(), call.get_src()) == -1:
+                    arrival_src_time = elev.calc_elevator(elev.get_curr_floor(), call.get_src())
+                    arrival_dest_time = elev.calc_elevator(call.get_src(), call.get_dest())
+                    total_time = arrival_src_time + arrival_dest_time
+
+                elif find_direction(elev, elev.get_curr_floor(), call.get_src()) == 1:
+                    arrival_src_time = elev.calc_elevator(elev.get_curr_floor(), call.get_src())
+                    arrival_dest_time = elev.calc_elevator(call.get_src(), call.get_dest())
+                    total_time = arrival_src_time + arrival_dest_time + ((abs(elev.get_max_floor() - elev.get_min_floor()))/elev.get_speed())
+
+            if total_time < min_time:
+                min_time = total_time
+                close_elev = elev
     return close_elev
 
 
