@@ -109,7 +109,7 @@ def read_json(file: str) -> Building:
 
 BUILDING = sys.argv[1]
 CALLS = sys.argv[2]
-OUTPUT = 'Allocation.csv'
+OUTPUT = 'out.csv'
 
 
 def call_to_string(call, elev: int):
