@@ -55,12 +55,11 @@ def find_optimal_elev(call: Calls):
     return close_elev
 
 
-# init the direction of the elevator per call
 def find_direction(elev, src, dest):
-    if src > dest:
-        elev.set_direction_el(-1)
-    elif src < dest:
-        elev.set_direction_el(1)
+    if src > dest: #DOWN
+        return -1
+    elif src < dest: #UP
+        return 1
 
 
 # -----------------------------------------------------------------------------
@@ -109,7 +108,7 @@ def read_json(file: str) -> Building:
 
 BUILDING = sys.argv[1]
 CALLS = sys.argv[2]
-OUTPUT = 'out.csv'
+OUTPUT = sys.argv[3]
 
 
 def call_to_string(call, elev: int):
