@@ -34,3 +34,6 @@ In addition, there is a reference to the direction of the elevator and adjusting
 * http://www.intertent.co.il/2011/07/elevator-algorithm.html
 * https://github.com/mshang/python-elevator-challenge
 
+# UML
+![image](https://user-images.githubusercontent.com/92460450/142384173-c2021c34-b5f0-428b-8df5-6393ca3ca07c.png)
+
