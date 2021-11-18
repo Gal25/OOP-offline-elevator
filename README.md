@@ -27,7 +27,7 @@ The algorithm assigns to each call the optimal elevator for it by connecting the
 
 Selectong the best choice - by comparing times of the elevators and choosing the fast elevator for the same call.
 In calculating the elevator times we include the opening and closing times of the doors, acceleration and deceleration times in each elevator, and the division of the elevator speed according to the number of floors in the call are taken into account.
-In addition, there is a reference to the direction of the elevator and adjusting the direction of the call to the direction of the elevator - in every time it takes the elevator to reach the destination (or the call source or the call destination) we will first want to check the direction of the elevator.
+In addition, there is a reference to the direction of the elevator and adjusting the direction of the call to the direction of the elevator - in every time it takes the elevator to reach the destination (or the source floor or the destination floor) we will first want to check the direction of the elevator.
 
 # External info:
 * https://www.geeksforgeeks.org/fcfs-disk-scheduling-algorithms/
