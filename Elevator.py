@@ -91,11 +91,8 @@ class Elevator:
         :param dest: destination floor - of the specific call
         :return: elevator operation time
         """
-        i = 0
         if src == dest:
             return 0
-        elif (src <= 0 and dest > 0) or (src > 0 and dest <= 0):
-            i = 1
         val = abs(dest - src) + i
         val /= self.speed
         val += self.open_time + self.close_time + self.stop_time + self.start_time
