@@ -30,7 +30,7 @@ In calculating the elevator times we include the opening and closing times of th
 In addition, there is a reference to the direction of the elevator and adjusting the direction of the call to the direction of the elevator - in every time it takes the elevator to reach the destination (or the source floor or the destination floor) we will first want to check the direction of the elevator.
 
 # UML
-![image](https://user-images.githubusercontent.com/92460450/142411788-ec645baa-bae1-490f-b414-a20d040f39b7.png)
+![image](https://user-images.githubusercontent.com/92460450/142414071-b4de84e7-9583-4221-85e5-d22a35d8d4c4.png)
 
 # External info:
 * https://www.geeksforgeeks.org/fcfs-disk-scheduling-algorithms/
