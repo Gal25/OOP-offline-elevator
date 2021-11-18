@@ -81,7 +81,6 @@ class Elevator:
     def set_available_elev(self, available_elev):
         self.available_elev = available_elev
 
-    # Calculate the whole time the elevator goes between src and dest
     def calc_elevator(self, src, dest):
         """
         This function measures the time the elevator operates according to each call.
@@ -93,11 +92,11 @@ class Elevator:
         """
         if src == dest:
             return 0
-        val = abs(dest - src) + i
+        val = abs(dest - src)
         val /= self.speed
-        val += self.open_time + self.close_time + self.stop_time + self.start_time
+        val += (self.open_time + self.close_time + self.stop_time + self.start_time)
         return val
 
-  
+
 
 
