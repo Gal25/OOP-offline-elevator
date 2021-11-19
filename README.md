@@ -1,4 +1,7 @@
 # OOP-Ex1
+
+By: Gal Cohen (316138411) and Dana Cherchenkov (208625293).
+
 This project is an assignment in an object-oriented course at Ariel University.
 The purpose of the task is to find an optimal elevator to solve the offline-elevator problem.
 The challenge is:
